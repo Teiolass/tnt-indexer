@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 from urllib import request, parse
 
-# Test 2
-
 url = 'http://www.tntvillage.scambioetico.org/src/releaselist.php'
 
 data_dic = {
