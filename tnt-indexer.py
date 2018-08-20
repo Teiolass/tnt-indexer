@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
+
 from urllib import request, parse
+import save_rel as save
 
 url = 'http://www.tntvillage.scambioetico.org/src/releaselist.php'
 
-def get_page(pag,cate):
-
+def get_page(pag, cate=-1):
     result = []
-
     data_dic = {
                 'page': pag
         }
+    
     if cate == -1: 
-        data_dic['cat']=cate
+        data_dic['cat'] = cate
 
     data = parse.urlencode(data_dic).encode()
     req =  request.Request(url, data=data)
@@ -23,6 +24,7 @@ def get_page(pag,cate):
     txt = txt[begin:end]
 
     txt = txt.replace('&#39;', '\'')
+    txt = txt.replace('\t', '    ')
 
     lines = txt.split('\n')
     for line in lines:
@@ -62,8 +64,11 @@ def get_page(pag,cate):
         line = line[end:]
         
         result.append(rel)
-
     return result
 
-print(get_page(1,-1))
-    
+page = get_page(4)
+save.save(page)
+page = save.get_data()
+for el in page:
+    print(el['title'])
+
